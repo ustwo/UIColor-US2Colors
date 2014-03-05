@@ -12,12 +12,12 @@
 #define COLORGETTER(name, red, green, blue)\
     + (instancetype) name##Color\
     {\
-        static UIColor * name##Color = nil;\
-        if (!name##Color)\
-        {\
-            name##Color = RGB(red, green, blue);\
-        }\
-        return name##Color;\
+        static UIColor *color = nil;\
+        static dispatch_once_t onceToken;\
+        dispatch_once(&onceToken, ^{\
+            color = RGB(red, green, blue);\
+        });\
+        return color;\
     }
 
 @implementation UIColor (US2Colors)
